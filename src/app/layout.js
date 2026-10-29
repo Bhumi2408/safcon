@@ -29,6 +29,8 @@ export const metadata = {
   title: "Safcon Food Machines Pvt. Ltd | Pasta Machines Manufacturer",
   description:
     "Safcon Food Machine — trusted Pasta Making Machine Manufacturer in Delhi. Automatic plants from 50 kg/h to 500 kg/h. Pan-India supply & support.",
+  // Google Search Console ownership verification
+  verification: { google: "GvYWHdGlfXUvjd_qpKO2LmftxqebMM1-6TrHwg8HeRo" },
 };
 
 export default function RootLayout({ children }) {
