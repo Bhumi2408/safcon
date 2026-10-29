@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Only theme tokens + things Tailwind classes can't express live here. Styling is inline in className. */
+
+@theme {
+  --font-sans: var(--font-inter), Sans-Serif;
+  --font-heading: var(--font-cormorant), Sans-Serif;
+  --font-poppins: var(--font-poppins-family), Sans-serif;
+  --font-arial: Arial, Sans-serif;
+
+  --color-brand: #c07516;
+  --color-brand-light: #fcb424;
+  --color-accent: #ef7e18;
+  --color-navy: #223256;
+  --color-navy-dark: #0a1b41;
+  --color-text: #504e4a;
+  --color-heading: #3b3a42;
+  --color-border: #edeff2;
+  --color-page: #fdfdfd;
+
+  --animate-float: float 1.5s ease-in-out infinite alternate;
+  --animate-jump: jump 4s ease infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(30px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes jump {
+  0%,
+  10%,
+  20%,
+  100% {
+    transform: translateY(0);
+  }
+  5%,
+  15% {
+    transform: translateY(-12px);
+  }
+}
+
+::selection {
+  color: #fff;
+  background: var(--color-brand);
 }
