@@ -1,6 +1,9 @@
 // Live domain — used for canonical URLs, sitemap, robots.txt and llms.txt
 export const siteUrl = "https://www.safconfoodmachine.com";
 
+// Web3Forms public access key (contact + popup forms). Submissions are emailed to the account owner.
+export const web3formsKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "894ce2a8-951f-44d3-acab-6dd49faa4e53";
+
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about-us" },

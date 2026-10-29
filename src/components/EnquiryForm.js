@@ -1,31 +1,54 @@
 "use client";
 
 import { useState } from "react";
+import { web3formsKey } from "@/data/site";
 
 const input =
   "block h-[43px] w-full rounded-[3px] border border-black/25 bg-white px-[14px] text-[16px] leading-[19px] text-black/70 outline-none transition-shadow placeholder:text-black/35 focus:border-[#066aab] focus:shadow-[0_0_0_1px_#066aab]";
 
-// Enquiry form (home "Get in touch" + contact page). Posts to /api/enquiry.
+// Enquiry form (home "Get in touch", contact page, popup). Submits straight to Web3Forms from the
+// browser; `source` tells you in the email which form was used.
 const buttons = {
   // home form picks up the theme button style, contact page keeps the form's own blue button
   theme: "min-h-10 rounded-[3px] bg-brand px-5 py-[5px] text-[15px] font-medium text-white transition-colors hover:bg-brand-light",
   blue: "h-[41px] rounded-[3px] bg-[#066aab] px-[15px] text-[17px] leading-none font-medium text-white transition-colors hover:bg-[#055080]",
 };
 
-export default function EnquiryForm({ spacing = "pt-[30px]", textareaHeight = "h-[120px]", button = "theme" }) {
+export default function EnquiryForm({
+  spacing = "pt-[30px]",
+  textareaHeight = "h-[120px]",
+  button = "theme",
+  source = "Website",
+  onSuccess,
+}) {
   const [status, setStatus] = useState("idle");
 
   async function onSubmit(e) {
     e.preventDefault();
     setStatus("sending");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const form = Object.fromEntries(new FormData(e.currentTarget));
+    const name = `${form.firstName} ${form.lastName}`.trim();
     try {
-      const res = await fetch("/api/enquiry", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: web3formsKey,
+          subject: `New enquiry from ${name} (${source})`,
+          from_name: "Safcon Website",
+          name,
+          email: form.email,
+          phone: form.mobile,
+          message: form.message || "-",
+          form: source,
+          page: window.location.href,
+          botcheck: form.botcheck,
+        }),
       });
-      setStatus(res.ok ? "sent" : "error");
+      const json = await res.json().catch(() => ({}));
+      const ok = res.ok && json.success;
+      setStatus(ok ? "sent" : "error");
+      if (ok) onSuccess?.();
     } catch {
       setStatus("error");
     }
@@ -41,6 +64,8 @@ export default function EnquiryForm({ spacing = "pt-[30px]", textareaHeight = "h
 
   return (
     <form onSubmit={onSubmit} className="w-full">
+      {/* spam honeypot — real visitors never see or fill this */}
+      <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" />
       <fieldset className="flex gap-5 pt-[15px]">
         <legend className="sr-only">Name</legend>
         <input name="firstName" required placeholder="First Name" aria-label="First Name" className={input} />

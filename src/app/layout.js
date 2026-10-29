@@ -2,6 +2,7 @@ import { Inter, Cormorant_Garamond, Poppins } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import EnquiryPopup from "@/components/EnquiryPopup";
 import { siteUrl } from "@/data/site";
 import "./globals.css";
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <EnquiryPopup />
       </body>
     </html>
   );
