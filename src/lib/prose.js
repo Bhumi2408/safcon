@@ -13,5 +13,5 @@ export const prose = [
   "[&_table]:w-full [&_table]:border-collapse",
   "[&_td]:border [&_td]:border-border [&_td]:px-[1em] [&_td]:py-[0.7em]",
   "[&_th]:border [&_th]:border-border [&_th]:px-[1em] [&_th]:py-[0.7em] [&_th]:text-center [&_th]:font-semibold",
-  "[&_img]:h-auto [&_img]:max-w-full",
+  "[&_img]:mx-auto [&_img]:h-auto [&_img]:w-full [&_img]:max-w-[500px] [&_img]:rounded-[10px]",
 ].join(" ");

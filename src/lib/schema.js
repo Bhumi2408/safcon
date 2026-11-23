@@ -216,6 +216,8 @@ export function blogPostingSchema(post) {
     datePublished: Number.isNaN(date.getTime()) ? undefined : date.toISOString(),
     author: { "@type": "Organization", name: post.author, url: abs("/") },
     publisher: { "@id": ORG_ID },
+    // optional per-post extras (keywords, about, articleSection, inLanguage, description…)
+    ...post.schema,
   };
 }
 

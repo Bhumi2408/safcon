@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Icon from "@/components/Icon";
-import CommentForm from "@/components/CommentForm";
 import posts from "@/data/blog";
 import { prose } from "@/lib/prose";
 import JsonLd from "@/components/JsonLd";
@@ -53,11 +52,6 @@ export default async function BlogPostPage({ params }) {
       </header>
 
       <div className={`mx-auto mt-[60px] w-[90vw] max-w-[750px] ${prose}`} dangerouslySetInnerHTML={{ __html: post.content }} />
-
-      <section className="mx-auto mt-[60px] w-[90vw] max-w-[750px] border-t border-border pt-[60px]">
-        <h2 className="mb-5 font-heading text-[16px] leading-[1.5] font-bold text-heading">Leave a Reply</h2>
-        <CommentForm type="comment" subject={post.title} withWebsite messageLabel="Add Comment" buttonLabel="Post Comment" />
-      </section>
     </article>
   );
 }
